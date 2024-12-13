@@ -1,26 +1,26 @@
-import { DataTypes } from 'sequelize';
+import { Application } from '../models/index.js';
+import { authenticateUser } from '../middleware/authMiddleware.js'; // Import the middleware function
 
-export default (sequelize) => sequelize.define('Application', {
-    company: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    jobTitle: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    status: {
-        type: DataTypes.ENUM('Interested', 'Applied', 'Offer', 'Rejected'),
-        defaultValue: 'Interested',
-        allowNull: false
-    },
-    deadline: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    notes: {
-        type: DataTypes.TEXT
+export async function getApplications(req, res) { 
+    try {
+        const userId = req.user.id;
+        const applications = await Application.findAll({ where: { userId } });
+        res.json(applications);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching applications' });
     }
-});
+}
 
-module.exports = Application;
+
+export async function addApplication(req, res) {
+    try {
+        const userId = req.user.id;
+        const { company, jobTitle, status, deadline, notes } = req.body;
+        const newApp = await Application.create({ userId, company, jobTitle, status, deadline, notes });
+        res.json(newApp);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error adding application' });
+    }
+}
