@@ -1,16 +1,10 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 const sequelize = new Sequelize('database', 'username', 'password', {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false // Disable logging; default: console.log
 });
 
-sequelize.sync()
-    .then(() => {
-        console.log('Database & tables created!');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
 const Application = sequelize.define('Application', {
         company: {
             type: DataTypes.STRING,
@@ -31,4 +25,16 @@ const Application = sequelize.define('Application', {
             type: DataTypes.TEXT
         }
     });
+
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+        await sequelize.sync();
+        console.log('Database & tables created!');
+    } catch (err) {
+        console.error('Unable to connect to the database:', err);
+    }
+})();
+
 export default Application;
