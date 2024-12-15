@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { sequelize } from './models/index.js';
 import authRoutes from './routes/authRoutes.js';
-import applicationRoutes from './routes/applicationRoutes.js';
+import applicationRoutes from './routes/routeApplication.jsx';
 
 const app = express();
 app.use(cors());
