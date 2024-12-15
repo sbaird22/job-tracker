@@ -1,0 +1,23 @@
+{
+  "name": "job-tracker",
+  "version": "1.0.0",
+  "description": "A job application tracker for tracking your job applications and information about the job and people you have contacted.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "install": "npm install --prefix server && npm install --prefix client",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "start": "NODE_ENV=production npm run build && npm run start:server",
+    "start:server": "npm run start --prefix server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
