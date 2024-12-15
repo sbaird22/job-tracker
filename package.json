@@ -10,7 +10,7 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "npm run build --prefix client",
-    "start": "NODE_ENV=production npm run build && npm run start:server",
+    "start": "cross-env NODE_ENV=production npm run build && npm run start:server",
     "start:server": "npm run start --prefix server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
